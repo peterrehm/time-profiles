@@ -1,6 +1,6 @@
 <?php
 
-namespace peterrehm\solar\Profiles;
+namespace peterrehm\TimeProfiles\Profiles;
 
 class MonthProfile
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace peterrehm\solar\TimeProfiles;
+namespace peterrehm\solar\Profiles;
 
 use peterrehm\TimeProfiles\Config\CalculationMonths;
 
-class MinuteProfile
+class HourProfile
 {
     public $profile = [];
 
@@ -14,9 +14,7 @@ class MinuteProfile
             $days = CalculationMonths::getDays($month);
             for ($day = 1; $day <= $days; $day++) {
                 for ($hour = 0; $hour <= 23; $hour++) {
-                    for ($minute = 0; $minute <= 59; $minute++) {
-                        $this->profile[$month][$day][$hour][$minute] = $defaultValue;
-                    }
+                    $this->profile[$month][$day][$hour] = $defaultValue;
                 }
             }
         }

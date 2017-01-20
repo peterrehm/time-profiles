@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="solar" basedir="." default="build:main">
+    <!-- Properties -->
+    <property name="dir.build" value="${project.basedir}/build" />
+
+    <!-- Default target -->
+    <target name="build:main"
+            depends="build:clean, build:prepare, build:tests"
+            description="Run all test and build everything" />
+
+    <!-- Project build clean -->
+    <target name="build:clean" description="Clean up build directories...">
+        <echo msg="Cleaning build directories ..." />
+        <delete dir="${dir.build}" />
+    </target>
+
+    <!-- Project build prepare -->
+    <target name="build:prepare" description="Create build directories and config...">
+        <echo msg="Prepare the vagrant box..." />
+        <exec command="composer install --ignore-platform-reqs" passthru="true" />
+    </target>
+
+    <!-- Project build prepare -->
+    <target name="build:tests" description="Run tests in the VM...">
+        <echo msg="Run the tests..." />
+        <exec command="bin/run_tests.sh" passthru="true" />
+        <exec command="bin/run_static_analysis.sh" passthru="true" />
+    </target>
+</project>

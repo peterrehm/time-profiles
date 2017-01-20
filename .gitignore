@@ -1,0 +1,10 @@
+*~
+.*.swo
+.*.swp
+.DS_Store
+.idea
+.vagrant
+bin/pdepend
+bin/php*
+vendor
+play.php

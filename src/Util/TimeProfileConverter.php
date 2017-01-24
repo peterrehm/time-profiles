@@ -3,8 +3,10 @@
 namespace peterrehm\TimeProfiles\Util;
 
 use peterrehm\TimeProfiles\Config\CalculationMonths;
+use peterrehm\TimeProfiles\Profiles\DayProfile;
 use peterrehm\TimeProfiles\Profiles\HourProfile;
 use peterrehm\TimeProfiles\Profiles\MinuteProfile;
+use peterrehm\TimeProfiles\Profiles\MonthProfile;
 use peterrehm\TimeProfiles\Profiles\QuarterHourProfile;
 
 class TimeProfileConverter
@@ -101,6 +103,72 @@ class TimeProfileConverter
                     }
                 }
             }
+        }
+
+        return $profile;
+    }
+
+    /**
+     * @param QuarterHourProfile $quarterHourProfile
+     * @return DayProfile
+     */
+    public static function quarterHourToDay(QuarterHourProfile $quarterHourProfile) : DayProfile
+    {
+        $profile = new DayProfile();
+
+        for ($month = 1; $month <= 12; $month++) {
+            $daysPerMonth = CalculationMonths::getDays($month);
+            for ($day = 1; $day <= $daysPerMonth; $day++) {
+                $totalDay = 0.00;
+                for ($hour = 0; $hour <= 23; $hour++) {
+                    for ($interval = 0; $interval <= 45; $interval+=15) {
+                        $totalDay += $quarterHourProfile->profile[$month][$day][$hour][$interval];
+                    }
+                }
+                $profile->profile[$month][$day] = $totalDay;
+            }
+        }
+
+        return $profile;
+    }
+
+    /**
+     * @param HourProfile $hourProfile
+     * @return DayProfile
+     */
+    public static function hourToDay(HourProfile $hourProfile) : DayProfile
+    {
+        $profile = new DayProfile();
+
+        for ($month = 1; $month <= 12; $month++) {
+            $daysPerMonth = CalculationMonths::getDays($month);
+            for ($day = 1; $day <= $daysPerMonth; $day++) {
+                $totalDay = 0.00;
+                for ($hour = 0; $hour <= 23; $hour++) {
+                    $totalDay += $hourProfile->profile[$month][$day][$hour];
+                }
+                $profile->profile[$month][$day] = $totalDay;
+            }
+        }
+
+        return $profile;
+    }
+
+    /**
+     * @param DayProfile $dayProfile
+     * @return MonthProfile
+     */
+    public static function dayToMonth(DayProfile $dayProfile) : MonthProfile
+    {
+        $profile = new MonthProfile();
+
+        for ($month = 1; $month <= 12; $month++) {
+            $totalMonth = 0.00;
+            $daysPerMonth = CalculationMonths::getDays($month);
+            for ($day = 1; $day <= $daysPerMonth; $day++) {
+                $totalMonth += $dayProfile->profile[$month][$day];
+            }
+            $profile->profile[$month] = $totalMonth;
         }
 
         return $profile;

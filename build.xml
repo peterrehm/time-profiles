@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="solar" basedir="." default="build:main">
+<project name="time-profiles" basedir="." default="build:main">
     <!-- Properties -->
     <property name="dir.build" value="${project.basedir}/build" />
 
@@ -16,7 +16,7 @@
 
     <!-- Project build prepare -->
     <target name="build:prepare" description="Create build directories and config...">
-        <echo msg="Prepare the vagrant box..." />
+        <echo msg="Prepare the build..." />
         <exec command="composer install --ignore-platform-reqs" passthru="true" />
     </target>
 

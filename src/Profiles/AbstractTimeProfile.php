@@ -20,4 +20,15 @@ class AbstractTimeProfile implements TimeProfile
 
         return $total;
     }
+
+    public function multiply(float $factor) : void
+    {
+        // recursive multiplication of each element
+        array_walk_recursive(
+            $this->profile,
+            function (&$value) use ($factor) {
+                $value *= $factor;
+            }
+        );
+    }
 }

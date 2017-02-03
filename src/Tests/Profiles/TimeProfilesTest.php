@@ -18,6 +18,9 @@ class TimeProfilesTest extends \PHPUnit_Framework_TestCase
         /** @var TimeProfile $profile */
         $profile = new $profile($default);
         $this->assertEquals($total, $profile->getTotal());
+
+        $profile->multiply(2.00);
+        $this->assertEquals($total * 2.00, $profile->getTotal());
     }
 
     public function timeProfilesDataProvider() : array

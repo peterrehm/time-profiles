@@ -4,6 +4,7 @@ namespace peterrehm\TimeProfile\Tests\Util;
 
 use peterrehm\TimeProfiles\Profiles\DayProfile;
 use peterrehm\TimeProfiles\Profiles\HourProfile;
+use peterrehm\TimeProfiles\Profiles\MinuteProfile;
 use peterrehm\TimeProfiles\Profiles\QuarterHourProfile;
 use peterrehm\TimeProfiles\Util\TimeProfileConverter;
 
@@ -77,5 +78,15 @@ class TimeProfileConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($dayProfile->getTotal(), $monthProfile->getTotal());
         $this->assertEquals(31, $monthProfile->profile[1]);
         $this->assertEquals(12, count($monthProfile->profile, COUNT_RECURSIVE));
+    }
+
+    public function testMinuteToDay()
+    {
+        $minuteProfile = new MinuteProfile(1);
+        $dayProfile = TimeProfileConverter::minuteToDay($minuteProfile);
+
+        $this->assertEquals($minuteProfile->getTotal(), $dayProfile->getTotal());
+        $this->assertEquals(1440, $dayProfile->profile[1][1]);
+        $this->assertEquals(377, count($dayProfile->profile, COUNT_RECURSIVE));
     }
 }

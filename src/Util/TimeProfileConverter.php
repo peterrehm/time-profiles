@@ -173,4 +173,28 @@ class TimeProfileConverter
 
         return $profile;
     }
+
+    /**
+     * @param MinuteProfile $minuteProfile
+     * @return DayProfile
+     */
+    public static function minuteToDay(MinuteProfile $minuteProfile) : DayProfile
+    {
+        $profile = new DayProfile();
+
+        for ($month = 1; $month <= 12; $month++) {
+            $daysPerMonth = CalculationMonths::getDays($month);
+            for ($day = 1; $day <= $daysPerMonth; $day++) {
+                $totalDay = 0.00;
+                for ($hour = 0; $hour <= 23; $hour++) {
+                    for ($interval = 0; $interval <= 59; $interval++) {
+                        $totalDay += $minuteProfile->profile[$month][$day][$hour][$interval];
+                    }
+                }
+                $profile->profile[$month][$day] = $totalDay;
+            }
+        }
+
+        return $profile;
+    }
 }

@@ -4,7 +4,7 @@ namespace peterrehm\TimeProfiles\Profiles;
 
 use peterrehm\TimeProfiles\Config\CalculationMonths;
 
-class MinuteProfile implements TimeProfile
+class MinuteProfile extends AbstractTimeProfile
 {
     public $profile = [];
 
@@ -20,23 +20,5 @@ class MinuteProfile implements TimeProfile
                 }
             }
         }
-    }
-
-    public function getTotal() : float
-    {
-        $total = 0.00;
-
-        for ($month = 1; $month <= 12; $month++) {
-            $days = CalculationMonths::getDays($month);
-            for ($day = 1; $day <= $days; $day++) {
-                for ($hour = 0; $hour <= 23; $hour++) {
-                    for ($minute = 0; $minute <= 59; $minute++) {
-                        $total += $this->profile[$month][$day][$hour][$minute];
-                    }
-                }
-            }
-        }
-
-        return $total;
     }
 }

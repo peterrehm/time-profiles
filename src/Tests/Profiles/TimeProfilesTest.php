@@ -3,8 +3,9 @@
 namespace peterrehm\TimeProfiles\Tests\Profile;
 
 use peterrehm\TimeProfiles\Profiles\TimeProfile;
+use PHPUnit\Framework\TestCase;
 
-class TimeProfilesTest extends \PHPUnit_Framework_TestCase
+class TimeProfilesTest extends TestCase
 {
     /**
      * @dataProvider timeProfilesDataProvider

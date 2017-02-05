@@ -3,8 +3,9 @@
 namespace peterrehm\TimeProfiles\Tests\Util;
 
 use peterrehm\TimeProfiles\Util\GpsHelper;
+use PHPUnit\Framework\TestCase;
 
-class GpsHelperTest extends \PHPUnit_Framework_TestCase
+class GpsHelperTest extends TestCase
 {
 
     public function distancesDataProvider()

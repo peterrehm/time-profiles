@@ -3,8 +3,9 @@
 namespace peterrehm\TimeProfiles\Tests\Util;
 
 use peterrehm\TimeProfiles\Util\TimezoneHelper;
+use PHPUnit\Framework\TestCase;
 
-class TimezoneHelperTest extends \PHPUnit_Framework_TestCase
+class TimezoneHelperTest extends TestCase
 {
     public function timezoneDataProvider()
     {

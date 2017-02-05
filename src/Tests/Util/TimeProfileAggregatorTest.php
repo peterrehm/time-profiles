@@ -8,8 +8,9 @@ use peterrehm\TimeProfiles\Profiles\MinuteProfile;
 use peterrehm\TimeProfiles\Profiles\MonthProfile;
 use peterrehm\TimeProfiles\Profiles\QuarterHourProfile;
 use peterrehm\TimeProfiles\Util\TimeProfileAggregator;
+use PHPUnit\Framework\TestCase;
 
-class TimeProfileAggregatorTest extends \PHPUnit_Framework_TestCase
+class TimeProfileAggregatorTest extends TestCase
 {
     public function testMinuteAggregation()
     {

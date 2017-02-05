@@ -7,8 +7,9 @@ use peterrehm\TimeProfiles\Profiles\HourProfile;
 use peterrehm\TimeProfiles\Profiles\MinuteProfile;
 use peterrehm\TimeProfiles\Profiles\QuarterHourProfile;
 use peterrehm\TimeProfiles\Util\TimeProfileConverter;
+use PHPUnit\Framework\TestCase;
 
-class TimeProfileConverterTest extends \PHPUnit_Framework_TestCase
+class TimeProfileConverterTest extends TestCase
 {
     public function testHourToQuarterHour()
     {

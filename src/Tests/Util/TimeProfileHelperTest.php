@@ -5,8 +5,9 @@ namespace peterrehm\TimeProfile\Tests\Util;
 use peterrehm\TimeProfiles\Config\CalculationMonths;
 use peterrehm\TimeProfiles\Profiles\HourProfile;
 use peterrehm\TimeProfiles\Util\TimeProfileHelper;
+use PHPUnit\Framework\TestCase;
 
-class TimeProfileHelperTest extends \PHPUnit_Framework_TestCase
+class TimeProfileHelperTest extends TestCase
 {
     public function hourProfileDataProvider()
     {

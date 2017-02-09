@@ -8,3 +8,4 @@ bin/pdepend
 bin/php*
 vendor
 play.php
+build/

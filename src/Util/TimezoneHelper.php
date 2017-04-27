@@ -11,27 +11,37 @@ class TimezoneHelper
     /**
      * Find the closest timezone for coordinates within a country
      *
-     * @param string $country
-     * @param float  $latitude
-     * @param float  $longitude
+     * @param float       $latitude
+     * @param float       $longitude
+     * @param null|string $country
+     * @param float|null  $offset
      *
-     * @return string timezone name
+     * @return string
      */
-    public static function getNearestTimezone(string $country, float $latitude, float $longitude) : string
+    public static function getNearestTimezone(float $latitude, float $longitude, ?string $country = null, ?float $offset = null) : string
     {
-        $timezoneIdentifiers = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, strtoupper($country));
+        // iterate over all timezones unless restricted with country code
+        if ($country !== null && strlen($country) == 2) {
+            $timezoneIdentifiers = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $country);
+        } else {
+            $timezoneIdentifiers = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+        }
+
         $timeZoneDistance = false;
         $timeZoneId = '';
-
-        // if only one time zone exists in the country return that timezone name
-        if (count($timezoneIdentifiers) === 1) {
-            return $timezoneIdentifiers[0];
-        }
 
         // iterate over all identifiers and calculate the distances to find the closest
         // timezone
         foreach ($timezoneIdentifiers as $id) {
             $timezone = new DateTimeZone($id);
+
+            if ($offset !== null) {
+                $yearStart = new \DateTime('01.01.2017', $timezone);
+                if ($offset !== (float) $timezone->getOffset($yearStart)/3600) {
+                    continue;
+                }
+            }
+
             $location = $timezone->getLocation();
             $distance = GpsHelper::haversineGreatCircleDistance($latitude, $longitude, $location['latitude'], $location['longitude']);
 
@@ -39,6 +49,18 @@ class TimezoneHelper
                 $timeZoneId = $id;
                 $timeZoneDistance = $distance;
             }
+        }
+
+        if (empty($timeZoneId)) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Timezone for lat: %s lon: %s country: %s with offset: %s could not be located.',
+                    $latitude,
+                    $longitude,
+                    $country,
+                    $offset
+                )
+            );
         }
 
         return $timeZoneId;
@@ -57,7 +79,7 @@ class TimezoneHelper
      */
     public static function getTimezoneInformationByLocation(string $countryCode, float $latitude, float $longitude, int $year = 2013) : array
     {
-        $timezoneId = self::getNearestTimezone($countryCode, $latitude, $longitude);
+        $timezoneId = self::getNearestTimezone($latitude, $longitude, $countryCode);
         return self::getTimezoneInformationById($timezoneId, $year);
     }
 

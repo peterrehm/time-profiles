@@ -11,7 +11,7 @@
     "beberlei/assert": "^2.4"
   },
   "require-dev": {
-    "peterrehm/php-test": "^0.1"
+    "peterrehm/php-test": "^0.2"
   },
   "scripts": {
     "post-root-package-install": [

@@ -52,7 +52,7 @@ class GpsHelperTest extends TestCase
         $this->assertThat(
             GpsHelper::haversineGreatCircleDistance($lat, $lon, $shiftedLat, $shiftedLon) * 1000,
             $this->logicalAnd(
-                $this->greaterThan(100),
+                $this->greaterThan(50),
                 $this->lessThan($max)
             )
         );

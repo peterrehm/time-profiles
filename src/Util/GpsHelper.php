@@ -32,4 +32,35 @@ class GpsHelper
             );
         return $angle * 6371;
     }
+
+    /**
+     * @param float $lat    Latitude
+     * @param float $lon    Longitude
+     * @param int   $max    Default is up to 1000m. The position will be randomized by about 100-1000m.
+     *                      The adjustment is +/- a few meters.
+     *                      Inspired by https://gis.stackexchange.com/questions/2951/algorithm-for-offsetting-a-latitude-longitude-by-some-amount-of-meters
+     * @return array
+     * @throws \Exception
+     */
+    public static function shiftLatLon(float $lat, float $lon, int $max = 1000)
+    {
+        if ($max < 100) {
+            throw new \Exception(sprintf('The parameter max must be either 0 or larger than 100m. %d has been provided.', $max));
+        }
+
+        $targetOffset = rand(80, $max);
+        $shiftLatPercentage = rand(20,80);
+
+        $shiftLat = ($shiftLatPercentage/100 * $targetOffset) / 111111;
+        // longitude distance needs to be calculated according to the formula lat^2 + lon^2 = distance^2
+        $shiftLon = (sqrt(pow($targetOffset, 2) - pow($shiftLatPercentage/100 * $targetOffset,2)) / (111111 * cos(deg2rad($lat))));
+
+        $shiftedLat = $lat + $shiftLat;
+        $shiftedLon = $lon + $shiftLon;
+
+        return [
+            'lat' => $shiftedLat,
+            'lon' => $shiftedLon
+        ];
+    }
 }

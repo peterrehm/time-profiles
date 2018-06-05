@@ -36,16 +36,16 @@ class GpsHelper
     /**
      * @param float $lat    Latitude
      * @param float $lon    Longitude
-     * @param int   $max    Default is up to 1000m. The position will be randomized by about 100-1000m.
+     * @param int   $max    Default is 500m. The position will be randomized by about 50-500m.
      *                      The adjustment is +/- a few meters.
      *                      Inspired by https://gis.stackexchange.com/questions/2951/algorithm-for-offsetting-a-latitude-longitude-by-some-amount-of-meters
      * @return array
      * @throws \Exception
      */
-    public static function shiftLatLon(float $lat, float $lon, int $max = 1000)
+    public static function shiftLatLon(float $lat, float $lon, int $max = 500)
     {
-        if ($max < 100) {
-            throw new \Exception(sprintf('The parameter max must be either 0 or larger than 100m. %d has been provided.', $max));
+        if ($max < 50) {
+            throw new \Exception(sprintf('The parameter max must be either 0 or larger than 50m. %d has been provided.', $max));
         }
 
         $targetOffset = rand(80, $max);
@@ -67,7 +67,8 @@ class GpsHelper
 
         return [
             'lat' => $shiftedLat,
-            'lon' => $shiftedLon
+            'lon' => $shiftedLon,
+            'distanceM' => GpsHelper::haversineGreatCircleDistance($lat, $lon, $shiftedLat, $shiftedLon) * 1000
         ];
     }
 }

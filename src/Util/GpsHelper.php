@@ -55,8 +55,15 @@ class GpsHelper
         // longitude distance needs to be calculated according to the formula lat^2 + lon^2 = distance^2
         $shiftLon = (sqrt(pow($targetOffset, 2) - pow($shiftLatPercentage/100 * $targetOffset,2)) / (111111 * cos(deg2rad($lat))));
 
-        $shiftedLat = $lat + $shiftLat;
-        $shiftedLon = $lon + $shiftLon;
+        $randomizeOperator = rand(0, 1);
+
+        if ($randomizeOperator === 0) {
+            $shiftedLat = $lat + $shiftLat;
+            $shiftedLon = $lon + $shiftLon;
+        } else {
+            $shiftedLat = $lat - $shiftLat;
+            $shiftedLon = $lon - $shiftLon;
+        }
 
         return [
             'lat' => $shiftedLat,
